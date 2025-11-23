@@ -1,36 +1,142 @@
-export default function AdminDashboard() {
+import Link from 'next/link';
+import DashboardLayout from '@/components/DashboardLayout';
+import { prisma } from '@/lib/db';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+export default async function AdminDashboard() {
+  // Fetch counts for dashboard stats
+  const [studentsCount, teachersCount, classesCount, subjectsCount] = await Promise.all([
+    prisma.student.count(),
+    prisma.teacher.count(),
+    prisma.class.count(),
+    prisma.subject.count(),
+  ]);
+
+  const quickLinks = [
+    {
+      title: 'Classes',
+      description: 'Manage school classes',
+      href: '/admin/classes',
+      icon: (
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      ),
+      color: 'from-blue-500 to-indigo-600',
+    },
+    {
+      title: 'Sections',
+      description: 'Manage class sections',
+      href: '/admin/sections',
+      icon: (
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        </svg>
+      ),
+      color: 'from-purple-500 to-pink-600',
+    },
+    {
+      title: 'Subjects',
+      description: 'Manage subjects',
+      href: '/admin/subjects',
+      icon: (
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      ),
+      color: 'from-green-500 to-emerald-600',
+    },
+    {
+      title: 'Students',
+      description: 'View student records',
+      href: '/admin/students',
+      icon: (
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      ),
+      color: 'from-orange-500 to-red-600',
+    },
+    {
+      title: 'Teachers',
+      description: 'View teacher records',
+      href: '/admin/teachers',
+      icon: (
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+      color: 'from-cyan-500 to-blue-600',
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <div className="inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 text-white shadow-lg">
-            <svg
-              className="h-10 w-10"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
-          </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-            Admin Dashboard
-          </h1>
-          <p className="mt-4 text-lg text-slate-600">
-            Welcome to the administrative portal. Manage your entire school from here.
+    <DashboardLayout title="Admin Dashboard" role="ADMIN">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Welcome back, Administrator. Here's what's happening today.
           </p>
-          <div className="mt-8 rounded-lg bg-white p-8 shadow-md">
-            <p className="text-sm text-slate-500">
-              🚧 This dashboard is currently under development. Authentication and full features coming soon!
-            </p>
-          </div>
         </div>
+
+        {/* Stats */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardDescription>Total Students</CardDescription>
+              <CardTitle className="text-4xl">{studentsCount}</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardDescription>Total Teachers</CardDescription>
+              <CardTitle className="text-4xl">{teachersCount}</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardDescription>Classes</CardDescription>
+              <CardTitle className="text-4xl">{classesCount}</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardDescription>Subjects</CardDescription>
+              <CardTitle className="text-4xl">{subjectsCount}</CardTitle>
+            </CardHeader>
+          </Card>
+        </div>
+
+        {/* Quick Links */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+            <CardDescription>Manage core academic entities</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {quickLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  <div className="group relative overflow-hidden rounded-lg border border-slate-200 p-6 hover:border-slate-300 hover:shadow-md transition-all">
+                    <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${link.color} text-white mb-4`}>
+                      {link.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-1">{link.title}</h3>
+                    <p className="text-sm text-slate-600">{link.description}</p>
+                    <div className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

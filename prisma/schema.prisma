@@ -7,6 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 // Enums
@@ -22,6 +23,12 @@ enum UserStatus {
   SUSPENDED
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 // Models
 model User {
   id           String     @id @default(cuid())
@@ -32,6 +39,117 @@ model User {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
+  // Relations
+  student      Student?
+  teacher      Teacher?
+
   @@index([email])
   @@index([role])
+}
+
+model Student {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  admissionNo String   @unique
+  firstName   String
+  lastName    String
+  dob         DateTime
+  gender      Gender
+  joinDate    DateTime @default(now())
+  classId     String?
+  sectionId   String?
+  
+  // Parent/Guardian info
+  parentName  String?
+  parentPhone String?
+  address     String?  @db.Text
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class       Class?   @relation(fields: [classId], references: [id], onDelete: SetNull)
+  section     Section? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+
+  @@index([admissionNo])
+  @@index([userId])
+  @@index([classId])
+  @@index([sectionId])
+  @@index([firstName, lastName])
+}
+
+model Teacher {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  empCode       String   @unique
+  firstName     String
+  lastName      String
+  phone         String?
+  qualification String?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subjects      Subject[]
+  classTeacher  Class[]   @relation("ClassTeacher")
+
+  @@index([empCode])
+  @@index([userId])
+}
+
+model Class {
+  id             String    @id @default(cuid())
+  name           String    @unique
+  order          Int       @unique
+  classTeacherId String?
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  sections       Section[]
+  subjects       Subject[]
+  students       Student[]
+  classTeacher   Teacher?  @relation("ClassTeacher", fields: [classTeacherId], references: [id], onDelete: SetNull)
+
+  @@index([order])
+  @@index([classTeacherId])
+}
+
+model Section {
+  id        String   @id @default(cuid())
+  name      String
+  classId   String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  class     Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  students  Student[]
+
+  @@unique([classId, name])
+  @@index([classId])
+}
+
+model Subject {
+  id        String   @id @default(cuid())
+  name      String
+  code      String   @unique
+  classId   String?
+  teacherId String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  class     Class?   @relation(fields: [classId], references: [id], onDelete: SetNull)
+  teacher   Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+
+  @@index([code])
+  @@index([classId])
+  @@index([teacherId])
 }
