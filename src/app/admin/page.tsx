@@ -3,6 +3,7 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { prisma } from '@/lib/db';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Users, GraduationCap, BookOpen, School } from 'lucide-react';
 
 export default async function AdminDashboard() {
   // Fetch counts for dashboard stats
@@ -92,31 +93,66 @@ export default async function AdminDashboard() {
           </p>
         </div>
 
-        {/* Stats */}
+        {/* KPI Overview Cards */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          <Card>
+          <Card className="border-l-4 border-l-orange-500 hover:shadow-lg transition-shadow">
             <CardHeader className="pb-3">
-              <CardDescription>Total Students</CardDescription>
-              <CardTitle className="text-4xl">{studentsCount}</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardDescription>Total Students</CardDescription>
+                <div className="h-10 w-10 rounded-full bg-orange-500/10 flex items-center justify-center">
+                  <GraduationCap className="h-5 w-5 text-orange-500" />
+                </div>
+              </div>
+              <CardTitle className="text-4xl font-bold">{studentsCount}</CardTitle>
             </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground">Enrolled students</p>
+            </CardContent>
           </Card>
-          <Card>
+
+          <Card className="border-l-4 border-l-cyan-500 hover:shadow-lg transition-shadow">
             <CardHeader className="pb-3">
-              <CardDescription>Total Teachers</CardDescription>
-              <CardTitle className="text-4xl">{teachersCount}</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardDescription>Total Teachers</CardDescription>
+                <div className="h-10 w-10 rounded-full bg-cyan-500/10 flex items-center justify-center">
+                  <Users className="h-5 w-5 text-cyan-500" />
+                </div>
+              </div>
+              <CardTitle className="text-4xl font-bold">{teachersCount}</CardTitle>
             </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground">Teaching staff</p>
+            </CardContent>
           </Card>
-          <Card>
+
+          <Card className="border-l-4 border-l-blue-500 hover:shadow-lg transition-shadow">
             <CardHeader className="pb-3">
-              <CardDescription>Classes</CardDescription>
-              <CardTitle className="text-4xl">{classesCount}</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardDescription>Total Classes</CardDescription>
+                <div className="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                  <School className="h-5 w-5 text-blue-500" />
+                </div>
+              </div>
+              <CardTitle className="text-4xl font-bold">{classesCount}</CardTitle>
             </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground">Active classes</p>
+            </CardContent>
           </Card>
-          <Card>
+
+          <Card className="border-l-4 border-l-green-500 hover:shadow-lg transition-shadow">
             <CardHeader className="pb-3">
-              <CardDescription>Subjects</CardDescription>
-              <CardTitle className="text-4xl">{subjectsCount}</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardDescription>Total Subjects</CardDescription>
+                <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center">
+                  <BookOpen className="h-5 w-5 text-green-500" />
+                </div>
+              </div>
+              <CardTitle className="text-4xl font-bold">{subjectsCount}</CardTitle>
             </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground">Available subjects</p>
+            </CardContent>
           </Card>
         </div>
 

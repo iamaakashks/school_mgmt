@@ -1,12 +1,32 @@
 import { prisma } from '@/lib/db';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SubjectForm } from './SubjectForm';
-import { SubjectList } from './SubjectList';
+import { SubjectManagement } from './SubjectManagement';
 
 export default async function SubjectsPage() {
-  const [subjects, classes, teachers] = await Promise.all([
-    prisma.subject.findMany({
+  // Fetch subjects with safe _count that won't fail if examSubjects table doesn't exist yet
+  let subjects;
+  try {
+    subjects = await prisma.subject.findMany({
+      include: {
+        class: true,
+        teacher: {
+          include: {
+            user: true,
+          },
+        },
+        _count: {
+          select: {
+            examSubjects: true,
+          },
+        },
+      },
+      orderBy: [{ name: 'asc' }, { code: 'asc' }],
+    });
+  } catch (error) {
+    // Fallback if examSubjects table doesn't exist yet
+    console.warn('ExamSubject table not found, fetching subjects without exam count');
+    subjects = await prisma.subject.findMany({
       include: {
         class: true,
         teacher: {
@@ -15,8 +35,13 @@ export default async function SubjectsPage() {
           },
         },
       },
-      orderBy: { name: 'asc' },
-    }),
+      orderBy: [{ name: 'asc' }, { code: 'asc' }],
+    });
+    // Add default _count for compatibility
+    subjects = subjects.map(s => ({ ...s, _count: { examSubjects: 0 } }));
+  }
+
+  const [classes, teachers] = await Promise.all([
     prisma.class.findMany({
       orderBy: { order: 'asc' },
     }),
@@ -30,31 +55,11 @@ export default async function SubjectsPage() {
 
   return (
     <DashboardLayout title="Subjects Management" role="ADMIN">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Subjects</h1>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Manage subjects and teacher assignments
-              </p>
-            </div>
-            <SubjectForm classes={classes} teachers={teachers} />
-          </div>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>All Subjects</CardTitle>
-            <CardDescription>
-              {subjects.length} {subjects.length === 1 ? 'subject' : 'subjects'} registered
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <SubjectList subjects={subjects} />
-          </CardContent>
-        </Card>
-      </div>
+      <SubjectManagement 
+        initialSubjects={subjects} 
+        classes={classes} 
+        teachers={teachers} 
+      />
     </DashboardLayout>
   );
 }

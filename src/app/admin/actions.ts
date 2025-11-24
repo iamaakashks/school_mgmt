@@ -101,19 +101,23 @@ export async function createSubject(formData: FormData) {
 
   const name = formData.get('name') as string;
   const code = formData.get('code') as string;
-  const classId = formData.get('classId') as string || null;
-  const teacherId = formData.get('teacherId') as string || null;
+  const classId = formData.get('classId') as string;
+  const teacherId = formData.get('teacherId') as string;
 
   if (!name || !code) {
     throw new Error('Name and code are required');
   }
 
+  // Handle empty strings from select dropdowns
+  const classIdValue = classId && classId !== '' ? classId : null;
+  const teacherIdValue = teacherId && teacherId !== '' ? teacherId : null;
+
   await prisma.subject.create({
     data: {
       name,
       code,
-      classId: classId || undefined,
-      teacherId: teacherId || undefined,
+      classId: classIdValue,
+      teacherId: teacherIdValue,
     },
   });
 

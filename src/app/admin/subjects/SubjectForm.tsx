@@ -30,9 +30,23 @@ type Teacher = {
   };
 };
 
-export function SubjectForm({ classes, teachers }: { classes: Class[]; teachers: Teacher[] }) {
-  const [open, setOpen] = useState(false);
+export function SubjectForm({ 
+  classes, 
+  teachers,
+  isOpen,
+  onClose 
+}: { 
+  classes: Class[]; 
+  teachers: Teacher[];
+  isOpen?: boolean;
+  onClose?: () => void;
+}) {
+  const [internalOpen, setInternalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Use external state if provided, otherwise use internal state
+  const open = isOpen !== undefined ? isOpen : internalOpen;
+  const setOpen = onClose !== undefined ? onClose : setInternalOpen;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,6 +57,8 @@ export function SubjectForm({ classes, teachers }: { classes: Class[]; teachers:
       await createSubject(formData);
       setOpen(false);
       (e.target as HTMLFormElement).reset();
+      // Refresh the page to show new subject
+      window.location.reload();
     } catch (error) {
       console.error('Failed to create subject:', error);
       alert('Failed to create subject. Please try again.');
@@ -53,11 +69,6 @@ export function SubjectForm({ classes, teachers }: { classes: Class[]; teachers:
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700">
-          + Add Subject
-        </Button>
-      </DialogTrigger>
       <DialogContent>
         <form onSubmit={handleSubmit}>
           <DialogHeader>
@@ -121,7 +132,7 @@ export function SubjectForm({ classes, teachers }: { classes: Class[]; teachers:
             </div>
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
+            <Button type="button" variant="outline" onClick={() => setOpen()} disabled={loading}>
               Cancel
             </Button>
             <Button type="submit" disabled={loading}>
