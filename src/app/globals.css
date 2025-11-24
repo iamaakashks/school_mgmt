@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @plugin "tailwindcss-animate";
 @import "tw-animate-css";
@@ -123,5 +123,46 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Print styles for report cards */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+  
+  .print\:p-6 {
+    padding: 1.5rem !important;
+  }
+  
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+  
+  /* Ensure report card fits on one page */
+  .report-card-container {
+    page-break-inside: avoid;
+  }
+  
+  /* Remove backgrounds in dark mode for print */
+  * {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  /* Keep table borders visible */
+  table, th, td {
+    border-color: #000 !important;
   }
 }

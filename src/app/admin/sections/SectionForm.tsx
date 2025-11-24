@@ -45,7 +45,7 @@ export function SectionForm({ classes }: { classes: Class[] }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-red-500 to-pink-600">
+        <Button className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700">
           + Add Section
         </Button>
       </DialogTrigger>
@@ -63,7 +63,7 @@ export function SectionForm({ classes }: { classes: Class[] }) {
               <select
                 id="classId"
                 name="classId"
-                className="flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm ring-offset-white focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                className="flex h-10 w-full rounded-md border border-input bg-background text-foreground px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 required
                 disabled={loading}
               >

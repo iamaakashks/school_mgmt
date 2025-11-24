@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import DashboardLayout from '@/components/DashboardLayout';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TeacherList } from './TeacherList';
 
@@ -30,12 +32,16 @@ export default async function TeachersPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Teachers</h1>
-              <p className="mt-2 text-sm text-slate-600">
+              <h1 className="text-3xl font-bold text-foreground">Teachers</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
                 View and manage teacher records
               </p>
             </div>
-            {/* Future: Add Teacher button will go here */}
+            <Link href="/admin/teachers/new">
+              <Button className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700">
+                + Add Teacher
+              </Button>
+            </Link>
           </div>
         </div>
 

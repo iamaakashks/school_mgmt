@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,7 +27,8 @@ export default function LoginPage() {
           title: 'Admin Login',
           description: 'Sign in to access the administrative portal',
           gradient: 'from-red-500 to-pink-600',
-          bgGradient: 'from-red-50 via-white to-pink-50',
+          bgGradientLight: 'from-red-50 via-background to-pink-50',
+          bgGradientDark: 'from-red-950/20 via-background to-pink-950/20',
           icon: (
             <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -43,7 +45,8 @@ export default function LoginPage() {
           title: 'Teacher Login',
           description: 'Sign in to access your teaching portal',
           gradient: 'from-green-500 to-emerald-600',
-          bgGradient: 'from-green-50 via-white to-emerald-50',
+          bgGradientLight: 'from-green-50 via-background to-emerald-50',
+          bgGradientDark: 'from-green-950/20 via-background to-emerald-950/20',
           icon: (
             <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -60,7 +63,8 @@ export default function LoginPage() {
           title: 'Student Login',
           description: 'Sign in to access your student portal',
           gradient: 'from-blue-500 to-indigo-600',
-          bgGradient: 'from-blue-50 via-white to-indigo-50',
+          bgGradientLight: 'from-blue-50 via-background to-indigo-50',
+          bgGradientDark: 'from-blue-950/20 via-background to-indigo-950/20',
           icon: (
             <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -77,7 +81,8 @@ export default function LoginPage() {
           title: 'Login',
           description: 'Sign in to Springfield Academy',
           gradient: 'from-blue-600 to-indigo-600',
-          bgGradient: 'from-blue-50 via-white to-indigo-50',
+          bgGradientLight: 'from-blue-50 via-background to-indigo-50',
+          bgGradientDark: 'from-blue-950/20 via-background to-indigo-950/20',
           icon: (
             <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -131,13 +136,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${roleConfig.bgGradient}`}>
+    <div className={`min-h-screen bg-gradient-to-br light:${roleConfig.bgGradientLight} dark:${roleConfig.bgGradientDark}`}>
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
+      <header className="border-b border-border bg-card/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
                 <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -148,10 +153,11 @@ export default function LoginPage() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-slate-900">Springfield Academy</h1>
-                <p className="text-xs text-slate-600">Digital Campus Portal</p>
+                <h1 className="text-xl font-bold text-foreground">Springfield Academy</h1>
+                <p className="text-xs text-muted-foreground">Digital Campus Portal</p>
               </div>
             </Link>
+            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -176,7 +182,7 @@ export default function LoginPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Error Message */}
                 {error && (
-                  <div className="rounded-lg bg-red-50 p-3 text-sm text-red-800 border border-red-200">
+                  <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive border border-destructive/20">
                     {error}
                   </div>
                 )}
@@ -246,7 +252,7 @@ export default function LoginPage() {
               <div className="mt-6 text-center">
                 <Link
                   href="/"
-                  className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   ← Back to home
                 </Link>
@@ -256,7 +262,7 @@ export default function LoginPage() {
 
           {/* Demo Credentials Note (Development Only) */}
           {process.env.NODE_ENV === 'development' && (
-            <div className="mt-4 rounded-lg bg-yellow-50 p-4 text-xs text-yellow-800 border border-yellow-200">
+            <div className="mt-4 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 p-4 text-xs text-yellow-800 dark:text-yellow-200 border border-yellow-200 dark:border-yellow-800">
               <p className="font-semibold">Development Mode</p>
               <p className="mt-1">
                 Create an admin user via: POST /api/auth/register-admin

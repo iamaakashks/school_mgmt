@@ -29,6 +29,13 @@ enum Gender {
   OTHER
 }
 
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
 // Models
 model User {
   id           String     @id @default(cuid())
@@ -68,9 +75,11 @@ model Student {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  class       Class?   @relation(fields: [classId], references: [id], onDelete: SetNull)
-  section     Section? @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  class       Class?       @relation(fields: [classId], references: [id], onDelete: SetNull)
+  section     Section?     @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  attendance  Attendance[]
+  examResults ExamResult[]
 
   @@index([admissionNo])
   @@index([userId])
@@ -92,9 +101,10 @@ model Teacher {
   updatedAt     DateTime @updatedAt
 
   // Relations
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  subjects      Subject[]
-  classTeacher  Class[]   @relation("ClassTeacher")
+  user               User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subjects           Subject[]
+  classTeacher       Class[]      @relation("ClassTeacher")
+  attendanceRecords  Attendance[]
 
   @@index([empCode])
   @@index([userId])
@@ -114,6 +124,7 @@ model Class {
   subjects       Subject[]
   students       Student[]
   classTeacher   Teacher?  @relation("ClassTeacher", fields: [classTeacherId], references: [id], onDelete: SetNull)
+  exams          Exam[]
 
   @@index([order])
   @@index([classTeacherId])
@@ -136,20 +147,98 @@ model Section {
 }
 
 model Subject {
-  id        String   @id @default(cuid())
-  name      String
-  code      String   @unique
-  classId   String?
-  teacherId String?
+  id          String        @id @default(cuid())
+  name        String
+  code        String        @unique
+  classId     String?
+  teacherId   String?
   
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   // Relations
-  class     Class?   @relation(fields: [classId], references: [id], onDelete: SetNull)
-  teacher   Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  class       Class?        @relation(fields: [classId], references: [id], onDelete: SetNull)
+  teacher     Teacher?      @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  examSubjects ExamSubject[]
+  examResults ExamResult[]
 
   @@index([code])
   @@index([classId])
   @@index([teacherId])
+}
+
+model Attendance {
+  id          String           @id @default(cuid())
+  studentId   String
+  date        DateTime         @db.Date
+  status      AttendanceStatus
+  markedById  String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  student     Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  markedBy    Teacher          @relation(fields: [markedById], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, date])
+  @@index([studentId])
+  @@index([date])
+  @@index([markedById])
+}
+
+model Exam {
+  id          String        @id @default(cuid())
+  name        String
+  term        String?
+  classId     String
+  startDate   DateTime
+  endDate     DateTime
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  class       Class         @relation(fields: [classId], references: [id], onDelete: Cascade)
+  subjects    ExamSubject[]
+  results     ExamResult[]
+
+  @@index([classId])
+  @@index([startDate])
+}
+
+model ExamSubject {
+  id          String   @id @default(cuid())
+  examId      String
+  subjectId   String
+  maxMarks    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  exam        Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([examId, subjectId])
+  @@index([examId])
+  @@index([subjectId])
+}
+
+model ExamResult {
+  id          String   @id @default(cuid())
+  examId      String
+  studentId   String
+  subjectId   String
+  marks       Float
+  grade       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  exam        Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subject     Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([examId, studentId, subjectId])
+  @@index([examId])
+  @@index([studentId])
+  @@index([subjectId])
 }

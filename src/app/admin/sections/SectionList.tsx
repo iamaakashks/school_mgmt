@@ -41,7 +41,7 @@ export function SectionList({ sections }: { sections: SectionWithClass[] }) {
   if (sections.length === 0) {
     return (
       <div className="py-12 text-center">
-        <p className="text-slate-500">No sections found. Add your first section to get started.</p>
+        <p className="text-muted-foreground">No sections found. Add your first section to get started.</p>
       </div>
     );
   }

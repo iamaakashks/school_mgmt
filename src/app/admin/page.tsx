@@ -69,14 +69,25 @@ export default async function AdminDashboard() {
       ),
       color: 'from-cyan-500 to-blue-600',
     },
+    {
+      title: 'Attendance',
+      description: 'View attendance overview',
+      href: '/admin/attendance',
+      icon: (
+        <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+      ),
+      color: 'from-teal-500 to-cyan-600',
+    },
   ];
 
   return (
     <DashboardLayout title="Admin Dashboard" role="ADMIN">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
-          <p className="mt-2 text-sm text-slate-600">
+          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
             Welcome back, Administrator. Here's what's happening today.
           </p>
         </div>
@@ -119,14 +130,14 @@ export default async function AdminDashboard() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {quickLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
-                  <div className="group relative overflow-hidden rounded-lg border border-slate-200 p-6 hover:border-slate-300 hover:shadow-md transition-all">
-                    <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${link.color} text-white mb-4`}>
+                  <div className="group relative overflow-hidden rounded-lg border border-border bg-card p-6 hover:border-accent hover:bg-accent/50 hover:shadow-md transition-all">
+                    <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${link.color} text-white mb-4 shadow-lg`}>
                       {link.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-1">{link.title}</h3>
-                    <p className="text-sm text-slate-600">{link.description}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">{link.title}</h3>
+                    <p className="text-sm text-muted-foreground">{link.description}</p>
                     <div className="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <svg className="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-5 w-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>

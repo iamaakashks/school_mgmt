@@ -33,8 +33,8 @@ export function StudentList({ students }: { students: StudentWithRelations[] }) 
   if (students.length === 0) {
     return (
       <div className="py-12 text-center">
-        <p className="text-slate-500">No students found.</p>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="text-muted-foreground">No students found.</p>
+        <p className="mt-2 text-sm text-muted-foreground/70">
           Student admission functionality will be added in the next phase.
         </p>
       </div>
@@ -64,7 +64,7 @@ export function StudentList({ students }: { students: StudentWithRelations[] }) 
                 {student.class && student.section ? (
                   `${student.class.name} - ${student.section.name}`
                 ) : (
-                  <span className="text-slate-400">Not assigned</span>
+                  <span className="text-muted-foreground">Not assigned</span>
                 )}
               </TableCell>
               <TableCell>{new Date(student.joinDate).toLocaleDateString()}</TableCell>
@@ -72,8 +72,8 @@ export function StudentList({ students }: { students: StudentWithRelations[] }) 
                 <span
                   className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
                     student.user.status === 'ACTIVE'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-slate-100 text-slate-800'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
+                      : 'bg-muted text-muted-foreground'
                   }`}
                 >
                   {student.user.status}

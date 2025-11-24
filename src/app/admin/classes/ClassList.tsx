@@ -38,7 +38,7 @@ export function ClassList({ classes }: { classes: ClassWithCounts[] }) {
   if (classes.length === 0) {
     return (
       <div className="py-12 text-center">
-        <p className="text-slate-500">No classes found. Add your first class to get started.</p>
+        <p className="text-muted-foreground">No classes found. Add your first class to get started.</p>
       </div>
     );
   }

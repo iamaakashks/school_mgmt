@@ -1,4 +1,6 @@
 import DashboardLayout from '@/components/DashboardLayout';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function StudentDashboard() {
   return (
@@ -20,41 +22,61 @@ export default function StudentDashboard() {
               />
             </svg>
           </div>
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          <h1 className="mt-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
             Welcome, Student
           </h1>
-          <p className="mt-4 text-lg text-slate-600">
+          <p className="mt-4 text-lg text-muted-foreground">
             View your results, attendance, and school announcements.
           </p>
 
+          {/* Quick Actions */}
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
+            <Link href="/student/attendance">
+              <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 px-8 py-6 text-lg h-auto">
+                <svg className="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                View My Attendance
+              </Button>
+            </Link>
+            <Link href="/student/results">
+              <Button className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 px-8 py-6 text-lg h-auto">
+                <svg className="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                View My Results
+              </Button>
+            </Link>
+          </div>
+
           {/* Quick Stats */}
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="text-3xl font-bold text-slate-900">0%</div>
-              <div className="mt-1 text-sm text-slate-600">Attendance Rate</div>
+            <div className="rounded-xl bg-card p-6 shadow-md border border-border">
+              <div className="text-3xl font-bold text-foreground">0%</div>
+              <div className="mt-1 text-sm text-muted-foreground">Attendance Rate</div>
             </div>
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="text-3xl font-bold text-slate-900">0</div>
-              <div className="mt-1 text-sm text-slate-600">Exams Taken</div>
+            <div className="rounded-xl bg-card p-6 shadow-md border border-border">
+              <div className="text-3xl font-bold text-foreground">0</div>
+              <div className="mt-1 text-sm text-muted-foreground">Exams Taken</div>
             </div>
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="text-3xl font-bold text-slate-900">0</div>
-              <div className="mt-1 text-sm text-slate-600">Pending Fees</div>
+            <div className="rounded-xl bg-card p-6 shadow-md border border-border">
+              <div className="text-3xl font-bold text-foreground">0</div>
+              <div className="mt-1 text-sm text-muted-foreground">Pending Fees</div>
             </div>
           </div>
 
-          <div className="mt-12 rounded-lg bg-white p-8 shadow-md text-left">
-            <h2 className="text-xl font-semibold text-slate-900">🎉 Authentication Active!</h2>
-            <p className="mt-2 text-sm text-slate-600">
+          <div className="mt-12 rounded-lg bg-card p-8 shadow-md border border-border text-left">
+            <h2 className="text-xl font-semibold text-foreground">🎉 Authentication Active!</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
               You are now logged in as a student. The authentication system is working!
             </p>
-            <ul className="mt-4 space-y-2 text-sm text-slate-600">
+            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
               <li>✅ JWT-based authentication</li>
               <li>✅ Role-based access control (RBAC)</li>
               <li>✅ HTTP-only secure cookies</li>
               <li>✅ Protected routes via middleware</li>
             </ul>
-            <p className="mt-4 text-xs text-slate-500">
+            <p className="mt-4 text-xs text-muted-foreground">
               🚧 Additional features coming in future phases.
             </p>
           </div>

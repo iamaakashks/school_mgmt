@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-background to-indigo-50 dark:from-blue-950/20 dark:via-background dark:to-indigo-950/20">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
+      <header className="border-b border-border bg-card/80 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
                 <svg
                   className="h-7 w-7"
                   fill="none"
@@ -24,10 +25,11 @@ export default function Home() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-slate-900">Springfield Academy</h1>
-                <p className="text-xs text-slate-600">Digital Campus Portal</p>
+                <h1 className="text-xl font-bold text-foreground">Springfield Academy</h1>
+                <p className="text-xs text-muted-foreground">Digital Campus Portal</p>
               </div>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -35,11 +37,11 @@ export default function Home() {
       {/* Hero Section */}
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+          <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
             Welcome to Your
-            <span className="block text-blue-600">Digital Campus</span>
+            <span className="block text-blue-600 dark:text-blue-400">Digital Campus</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Access your academic portal, manage attendance, view results, and stay connected with the school community.
           </p>
         </div>
@@ -49,9 +51,9 @@ export default function Home() {
           {/* Admin Login */}
           <Link
             href="/login?role=admin"
-            className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1"
+            className="group relative overflow-hidden rounded-2xl bg-card border border-border p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 hover:border-accent"
           >
-            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 transform rounded-full bg-red-100 opacity-50 transition-transform group-hover:scale-110"></div>
+            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 transform rounded-full bg-red-500/10 opacity-50 transition-transform group-hover:scale-110"></div>
             <div className="relative">
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-pink-600 text-white shadow-lg">
                 <svg
@@ -68,11 +70,11 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mt-6 text-xl font-bold text-slate-900">Admin Portal</h3>
-              <p className="mt-2 text-sm text-slate-600">
+              <h3 className="mt-6 text-xl font-bold text-foreground">Admin Portal</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Manage students, teachers, classes, exams, and complete school operations.
               </p>
-              <div className="mt-6 flex items-center text-sm font-semibold text-red-600">
+              <div className="mt-6 flex items-center text-sm font-semibold text-red-600 dark:text-red-400">
                 Login as Admin
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -94,9 +96,9 @@ export default function Home() {
           {/* Teacher Login */}
           <Link
             href="/login?role=teacher"
-            className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1"
+            className="group relative overflow-hidden rounded-2xl bg-card border border-border p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 hover:border-accent"
           >
-            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 transform rounded-full bg-green-100 opacity-50 transition-transform group-hover:scale-110"></div>
+            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 transform rounded-full bg-green-500/10 opacity-50 transition-transform group-hover:scale-110"></div>
             <div className="relative">
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg">
                 <svg
@@ -113,11 +115,11 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mt-6 text-xl font-bold text-slate-900">Teacher Portal</h3>
-              <p className="mt-2 text-sm text-slate-600">
+              <h3 className="mt-6 text-xl font-bold text-foreground">Teacher Portal</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Mark attendance, enter grades, manage your classes and communicate with students.
               </p>
-              <div className="mt-6 flex items-center text-sm font-semibold text-green-600">
+              <div className="mt-6 flex items-center text-sm font-semibold text-green-600 dark:text-green-400">
                 Login as Teacher
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -139,9 +141,9 @@ export default function Home() {
           {/* Student Login */}
           <Link
             href="/login?role=student"
-            className="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 sm:col-span-2 lg:col-span-1"
+            className="group relative overflow-hidden rounded-2xl bg-card border border-border p-8 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 hover:border-accent sm:col-span-2 lg:col-span-1"
           >
-            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 transform rounded-full bg-blue-100 opacity-50 transition-transform group-hover:scale-110"></div>
+            <div className="absolute right-0 top-0 h-32 w-32 -translate-y-8 translate-x-8 transform rounded-full bg-blue-500/10 opacity-50 transition-transform group-hover:scale-110"></div>
             <div className="relative">
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg">
                 <svg
@@ -158,11 +160,11 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="mt-6 text-xl font-bold text-slate-900">Student Portal</h3>
-              <p className="mt-2 text-sm text-slate-600">
+              <h3 className="mt-6 text-xl font-bold text-foreground">Student Portal</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
                 View your results, attendance, announcements, fee status and connect with teachers.
               </p>
-              <div className="mt-6 flex items-center text-sm font-semibold text-blue-600">
+              <div className="mt-6 flex items-center text-sm font-semibold text-blue-600 dark:text-blue-400">
                 Login as Student
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -185,14 +187,14 @@ export default function Home() {
         {/* Features Section */}
         <div className="mt-24">
           <div className="text-center">
-            <h3 className="text-3xl font-bold text-slate-900">Key Features</h3>
-            <p className="mt-4 text-lg text-slate-600">Everything you need for modern school management</p>
+            <h3 className="text-3xl font-bold text-foreground">Key Features</h3>
+            <p className="mt-4 text-lg text-muted-foreground">Everything you need for modern school management</p>
           </div>
 
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {/* Feature 1 */}
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 text-purple-600">
+            <div className="rounded-xl bg-card border border-border p-6 shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -207,15 +209,15 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h4 className="mt-4 font-semibold text-slate-900">Attendance Tracking</h4>
-              <p className="mt-2 text-sm text-slate-600">
+              <h4 className="mt-4 font-semibold text-foreground">Attendance Tracking</h4>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Real-time attendance management with detailed reports and statistics.
               </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100 text-orange-600">
+            <div className="rounded-xl bg-card border border-border p-6 shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400">
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -230,15 +232,15 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h4 className="mt-4 font-semibold text-slate-900">Exam Results & Report Cards</h4>
-              <p className="mt-2 text-sm text-slate-600">
+              <h4 className="mt-4 font-semibold text-foreground">Exam Results & Report Cards</h4>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Complete exam management with digital report cards and performance analytics.
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-100 text-cyan-600">
+            <div className="rounded-xl bg-card border border-border p-6 shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400">
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -253,15 +255,15 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h4 className="mt-4 font-semibold text-slate-900">Fee Management</h4>
-              <p className="mt-2 text-sm text-slate-600">
+              <h4 className="mt-4 font-semibold text-foreground">Fee Management</h4>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Track fee payments, generate invoices, and enable online payment options.
               </p>
             </div>
 
             {/* Feature 4 */}
-            <div className="rounded-xl bg-white p-6 shadow-md">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-pink-100 text-pink-600">
+            <div className="rounded-xl bg-card border border-border p-6 shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400">
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -276,8 +278,8 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h4 className="mt-4 font-semibold text-slate-900">Announcements & Notices</h4>
-              <p className="mt-2 text-sm text-slate-600">
+              <h4 className="mt-4 font-semibold text-foreground">Announcements & Notices</h4>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Stay updated with school announcements, circulars, and important notices.
               </p>
             </div>
@@ -286,21 +288,21 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-24 border-t bg-white">
+      <footer className="mt-24 border-t border-border bg-card">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="md:flex md:items-center md:justify-between">
             <div className="text-center md:text-left">
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-foreground">
                 <strong>Springfield Academy</strong>
               </p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-muted-foreground">
                 123 Education Street, Knowledge City, KC 12345
               </p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-muted-foreground">
                 Phone: (555) 123-4567 | Email: info@springfieldacademy.edu
               </p>
             </div>
-            <div className="mt-4 text-center text-xs text-slate-500 md:mt-0">
+            <div className="mt-4 text-center text-xs text-muted-foreground md:mt-0">
               <p>Powered by School Management System</p>
               <p className="mt-1">© 2024 Springfield Academy. All rights reserved.</p>
             </div>

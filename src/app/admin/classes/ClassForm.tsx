@@ -39,7 +39,7 @@ export function ClassForm() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-red-500 to-pink-600">
+        <Button className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700">
           + Add Class
         </Button>
       </DialogTrigger>
@@ -72,7 +72,7 @@ export function ClassForm() {
                 required
                 disabled={loading}
               />
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-muted-foreground">
                 Lower numbers appear first in lists
               </p>
             </div>

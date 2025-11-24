@@ -27,8 +27,8 @@ export default async function ClassesPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Classes</h1>
-              <p className="mt-2 text-sm text-slate-600">
+              <h1 className="text-3xl font-bold text-foreground">Classes</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
                 Manage school classes and their sections
               </p>
             </div>

@@ -30,8 +30,8 @@ export function TeacherList({ teachers }: { teachers: TeacherWithRelations[] }) 
   if (teachers.length === 0) {
     return (
       <div className="py-12 text-center">
-        <p className="text-slate-500">No teachers found.</p>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="text-muted-foreground">No teachers found.</p>
+        <p className="mt-2 text-sm text-muted-foreground/70">
           Teacher admission functionality will be added in the next phase.
         </p>
       </div>
@@ -58,17 +58,17 @@ export function TeacherList({ teachers }: { teachers: TeacherWithRelations[] }) 
               <TableCell className="font-semibold">
                 {teacher.firstName} {teacher.lastName}
               </TableCell>
-              <TableCell>{teacher.phone || <span className="text-slate-400">-</span>}</TableCell>
+              <TableCell>{teacher.phone || <span className="text-muted-foreground">-</span>}</TableCell>
               <TableCell>
-                {teacher.qualification || <span className="text-slate-400">-</span>}
+                {teacher.qualification || <span className="text-muted-foreground">-</span>}
               </TableCell>
               <TableCell>{teacher._count.subjects}</TableCell>
               <TableCell>
                 <span
                   className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
                     teacher.user.status === 'ACTIVE'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-slate-100 text-slate-800'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
+                      : 'bg-muted text-muted-foreground'
                   }`}
                 >
                   {teacher.user.status}

@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import DashboardLayout from '@/components/DashboardLayout';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { StudentList } from './StudentList';
 import { StudentSearch } from './StudentSearch';
@@ -7,9 +9,10 @@ import { StudentSearch } from './StudentSearch';
 export default async function StudentsPage({
   searchParams,
 }: {
-  searchParams: { search?: string };
+  searchParams: Promise<{ search?: string }>;
 }) {
-  const search = searchParams.search || '';
+  const params = await searchParams;
+  const search = params.search || '';
 
   const students = await prisma.student.findMany({
     where: search
@@ -43,12 +46,16 @@ export default async function StudentsPage({
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">Students</h1>
-              <p className="mt-2 text-sm text-slate-600">
+              <h1 className="text-3xl font-bold text-foreground">Students</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
                 View and manage student records
               </p>
             </div>
-            {/* Future: Add Student button will go here */}
+            <Link href="/admin/students/new">
+              <Button className="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700">
+                + Add Student
+              </Button>
+            </Link>
           </div>
         </div>
 

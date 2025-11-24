@@ -43,7 +43,7 @@ export function SubjectList({ subjects }: { subjects: SubjectWithRelations[] }) 
   if (subjects.length === 0) {
     return (
       <div className="py-12 text-center">
-        <p className="text-slate-500">No subjects found. Add your first subject to get started.</p>
+        <p className="text-muted-foreground">No subjects found. Add your first subject to get started.</p>
       </div>
     );
   }
@@ -64,12 +64,12 @@ export function SubjectList({ subjects }: { subjects: SubjectWithRelations[] }) 
           <TableRow key={subject.id}>
             <TableCell className="font-semibold">{subject.name}</TableCell>
             <TableCell className="font-mono text-sm">{subject.code}</TableCell>
-            <TableCell>{subject.class?.name || <span className="text-slate-400">-</span>}</TableCell>
+            <TableCell>{subject.class?.name || <span className="text-muted-foreground">-</span>}</TableCell>
             <TableCell>
               {subject.teacher ? (
                 `${subject.teacher.firstName} ${subject.teacher.lastName}`
               ) : (
-                <span className="text-slate-400">Unassigned</span>
+                <span className="text-muted-foreground">Unassigned</span>
               )}
             </TableCell>
             <TableCell className="text-right">
